@@ -1,49 +1,76 @@
 ﻿@model IEnumerable<MVCModels.Web.Models.Recipe>
+
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Table";
 }
 
 <h2>All Recipes</h2>
-<style>
 
+
+<style>
 
     .grid-container {
         justify-content: center;
         display: grid;
         grid-template-columns: auto auto auto;
-        grid-gap: 0px 50px;
         padding: 10px;
     }
 
     .grid-item {
-        background-color: rgba(134, 215, 118, 0.49);
+        justify-content: center;
+        display: grid;
+        grid-column-gap: 0px;
+        width: 320px;
     }
 
-        .grid-item img {
-            width: 350px;
-        }
+    #grid-item-styling {
+        font-size: 12px;
+        min-height: 20px;
+        background-image: repeating-linear-gradient(180deg, rgba(134, 215, 118, 0.49),rgba(134, 215, 118, 0.49) 17px, #FFF 17px, #FFF 34px);
+    }
+
+    .grid-item img {
+        width: 150px;
+    }
 
     #stars-img img {
         width: 33%;
     }
 </style>
+
+
 <div class="grid-container">
     @foreach (Recipe item in Model)
     {
         <div class="grid-item">
             <a asp-action="Detail" asp-route-id="@item.Id"><img src="~/images/@item.ImageName" /></a>
-
         </div>
     }
 
+    @*<div class="grid-item">
+        <div>
+            <b>Name</b> <br />
+            <b>Type</b> <br />
+            <b>Cook Time</b> <br />
+            <b>Ingredients</b> <br />
+            <b>Rating</b> <br />
+        </div>*@
+
     @foreach (Recipe item in Model)
     {
-        <div class="grid-item">
-            <div style="font-weight:bold; color: dodgerblue; font-size: 20px;">
-                <a asp-action="Detail" asp-route-id="@item.Id">@item.Name</a>
+        <div id="grid-item-styling" class="grid-item">
+            <div>
+                <a asp-action="Detail" asp-route-id="@item.Id">@item.Name</a> <br />
+</div>
+            <div>
+                @item.RecipeType <br />
             </div>
-            <br />
-
+            <div>
+                @item.CookTimeInMinutes <br />
+            </div>
+            <div>
+                @item.Ingredients.Count @Html.DisplayNameFor(model => model.Ingredients) <br />
+            </div>
             <div style="position: relative;" id="stars-img">
                 @switch (Convert.ToInt32(item.AverageRating))
                 {
@@ -66,12 +93,7 @@
                         break;
 
                 }
-                <div style=" float: right; display:inline">
-                    @item.Ingredients.Count ingredients
-                </div>
             </div>
-
         </div>
     }
 </div>
-
