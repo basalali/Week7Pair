@@ -1,60 +1,68 @@
-﻿@model MVCModels.Web.Models.Recipe
+﻿@model Recipe
+
+
 
 @{
     ViewData["Title"] = "Detail";
+
 }
 
-<h2>Detail</h2>
+<h2>Recipe Detail</h2>
 
-<div>
-    <h4>Recipe</h4>
-    <hr />
+
+<img style="width: 200px; margin-top: 40px;" src="~/images/@Model.ImageName" />
+<div style="display: inline-block; margin-left: 70px; margin-top: -200px;">
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Id)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Id)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd>
+        <dd style="font-size: 20px; ">
             @Html.DisplayFor(model => model.Name)
         </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
+        <dd style="font-size: 12px; ">
+            @Html.DisplayFor(model => model.RecipeType)
+        </dd>
+        <br />
+        <dd>
+            <b>Cook Time</b> @Html.DisplayFor(model => model.CookTimeInMinutes) minutes
+        </dd>
+        <br />
         <dd>
             @Html.DisplayFor(model => model.Description)
         </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ImageName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ImageName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.AverageRating)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.AverageRating)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CookTimeInMinutes)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CookTimeInMinutes)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.RecipeType)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.RecipeType)
-        </dd>
     </dl>
 </div>
+
+<br />
+
+<h3>Ingredients</h3>
+
 <div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Back to List</a>
+
+    <ul>
+        @foreach (Ingredient item in Model.Ingredients)
+        {
+
+            <li> @item.Quantity @item.Name <br /></li>
+
+        }
+    </ul>
+
 </div>
+<h3>Preparations</h3>
+
+<div>
+
+    <ol>
+        @foreach(string item in Model.PreparationSteps)
+        {
+
+            <li> @item<br /></li>
+
+        }
+    </ol>
+
+</div>
+
+
+@*<div>
+        @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+        <a asp-action="Index">Back to List</a>
+    </div>*@
